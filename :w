@@ -1,0 +1,13 @@
+require 'squib'
+require 'pry'
+
+Squib::Deck.new width: 825, height: 1125, cards: 2 do
+  data = xlsx file: 'allies.xlsx'
+
+  png file: 'icons/ally.png'
+
+  text str: data["Name"], x: inches(1), y: inches(1)
+  png file: data["Cost"][0].split('').map {|c| "icons/cubes/#{c}.png"}, x: inches(1), y: inches(index)/2
+  text str: data["Color"], x: inches(1), y: inches(2)
+  save_png prefix: 'allies_'
+end
