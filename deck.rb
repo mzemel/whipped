@@ -6,6 +6,9 @@ Squib::Deck.new width: 825, height: 1125, cards: 15 do
 
   png file: 'icons/ally.png'
   text str: data["Name"], x: inches(1), y: inches(1)
+
+  #tldr this reads every row and says "these are the cubes in slot 1, these are the cubes in slot 2...
+  #  and has 5 slots for cubes.  Most are nil, so an empty image prints there
   cost_colors = {}
   cost_counts = {}
   data["Cost"].each_with_index do |row, row_index|
@@ -16,10 +19,9 @@ Squib::Deck.new width: 825, height: 1125, cards: 15 do
       cost_counts[index][row_index] = count
     end
   end
-  (0..4).each do |i| # hack; prints a cube PNG 5 times; if data is missing, print an empty PNG
-                     # this will need to be refactored if we need a lotta cubes, or if we want to add "OR" slash mark
-    # png file: data["Cost"].map {|cell| cell.split("").map {|c| "icons/cubes/#{c}.png"}[i]}, x: inches(1) + inches(i)/2
-    png file: cost_colors[i], x: inches(1) + inches(i)/2
+  cost_colors.each do |index, value|
+    png file: value, x: inches(1) + inches(index)/2
+    text str: cost_counts[index], x: inches(1.1) + inches(index)/2, y: inches(0.1)
   end
   png file: data["Color"].map {|c| "icons/cubes/#{c}.png"}, x: inches(1), y: inches(2)
   
