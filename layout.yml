@@ -5,8 +5,7 @@ cut:
   width: 750
   height: 1050
 
-# The "safe zone" as defined by TheGameCrafter poker cards
-safe:
+bleed:
   x: 75
   y: 75
   width: 675
@@ -14,5 +13,57 @@ safe:
   radius: 16
   dash: 3 3
 
+box:
+  x: 112.5
+  y: 300
+  width: 600
+  align: 'center'
+
+# Ally
 icon:
-  x: 
+  extends: bleed
+  x: += 20
+  y: += 20
+  width: 180
+  height: 180
+
+cube:
+  width: 112.5
+  height: 112.5
+
+title:
+  extends: box
+  height: 75
+
+art:
+  extends: box
+  y: += 112.5
+  height: 225
+
+effect:
+  extends: box
+  y: += 375
+  height: 187.5
+
+alt:
+  extends: box
+  y: += 600
+  height: 112.5
+
+alt_text:
+  extends: alt
+  x: += 37.5
+  y: += 37.5
+  width: 412.5
+  align: 'center'
+
+alt_shield:
+  x: 562.5
+  y: 918.75
+  width: 75
+  height: 75
+
+alt_points:
+  extends: alt_shield
+  x: += 18.75
+  y: += 9.375
