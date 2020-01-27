@@ -71,7 +71,7 @@ ally_alt:
   dash: 3 3
 
 ally_alt_text:
-  extends: ally_alt
+  extends: alt
   x: += 37.5
   y: += 37.5
   width: 412.5
@@ -83,25 +83,7 @@ ally_alt_shield:
   width: 75
   height: 75
 
-ally_alt_points:
-  extends: ally_alt_shield
+alt_points:
+  extends: alt_shield
   x: += 18.75
   y: += 9.375
-
-rider:
-  x: 75
-  y: 900
-  width: 675
-  height: 150
-  dash: 3 3
-
-rider_shield:
-  x: 600
-  y: 918.75
-  width: 112.5
-  height: 112.5
-
-rider_points:
-  extends: rider_shield
-  y: += 18.75
-  align: 'center'
