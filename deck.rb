@@ -61,6 +61,11 @@ Squib::Deck.new width: 825, height: 1125, cards: 50, layout: 'layout.yml' do
     when 'Double_Resource'
       png range: collection, file: data['Color'].map {|colors| "icons/cubes/#{colors.split('').first}_full.png" if colors.to_s.size == 2}, layout: 'cube', x: 7.blocks, y: 19.blocks
       png range: collection, file: data['Color'].map {|colors| "icons/cubes/#{colors.split('').last}_full.png" if colors.to_s.size == 2}, layout: 'cube', x: 11.blocks, y: 19.blocks
+    when 'Bodyguard'
+      svg range: collection, file: 'icons/dagger.svg', layout: 'icon', x: 5.blocks, y: 18.5.blocks
+      line range: collection, x1: 10.blocks, y1: 23.blocks, x2: 11.5.blocks, y2: 19.blocks, stroke_width: 10
+      svg range: collection, file: 'icons/shield.svg', layout: 'icon', x: 12.blocks, y: 18.5.blocks
+      text range: collection, str: '-2', layout: 'icon', x: 12.blocks, y: 19.blocks, font_size: 24, align: 'center'
     end
   end
 

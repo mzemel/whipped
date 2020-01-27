@@ -78,7 +78,7 @@ ally_alt_text:
   align: 'center'
 
 ally_alt_shield:
-  x: 562.5
+  x: 571.875
   y: 918.75
   width: 75
   height: 75
