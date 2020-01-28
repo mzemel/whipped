@@ -13,7 +13,7 @@ bleed:
   height: 975
   radius: 16
   dash: 3 3
-  fill_color: '#ecc9a3'
+  fill_color: 'white'
 
 box:
   x: 112.5
