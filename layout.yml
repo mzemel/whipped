@@ -73,8 +73,10 @@ title:
 
 art:
   extends: box
-  y: += 112.5
-  height: 225
+  y: += 150
+  height: 187.5
+  fill_color: 'white'
+  stroke_width: 0
 
 art_text:
   extends: art
@@ -89,7 +91,8 @@ ally_alt:
   extends: box
   y: += 600
   height: 112.5
-  dash: 3 3
+  fill_color: 'white'
+  stroke_width: 0
 
 ally_alt_text:
   extends: ally_alt
