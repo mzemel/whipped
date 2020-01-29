@@ -31,7 +31,7 @@ Squib::Deck.new width: 825, height: 1125, cards: 5, layout: 'layout.yml' do
         'white'
       end
     end
-    rect x: 3.blocks, y: (20 - i*2).blocks, height: 2.blocks, width: 2.blocks, fill_color: fill_colors
+    rect x: 3.blocks, y: (20 - i*2.5).blocks, height: 2.5.blocks, width: 2.5.blocks, fill_color: fill_colors
   end
 
   #  second income column
@@ -45,7 +45,7 @@ Squib::Deck.new width: 825, height: 1125, cards: 5, layout: 'layout.yml' do
         'white'
       end
     end
-    rect x: 5.blocks, y: (20 - i*2).blocks, height: 2.blocks, width: 2.blocks, fill_color: fill_colors
+    rect x: 5.5.blocks, y: (20 - i*2.5).blocks, height: 2.5.blocks, width: 2.5.blocks, fill_color: fill_colors
   end
   
   #peek
@@ -60,7 +60,7 @@ Squib::Deck.new width: 825, height: 1125, cards: 5, layout: 'layout.yml' do
         'white'
       end
     end
-    rect range: peek_players, x: 10.blocks, y: (20 - i*2).blocks, height: 2.blocks, width: 2.blocks, fill_color: fill_colors
+    rect range: peek_players, x: 11.blocks, y: (20 - i*2.5).blocks, height: 2.5.blocks, width: 2.5.blocks, fill_color: fill_colors
   end
 
   #trade
@@ -75,11 +75,11 @@ Squib::Deck.new width: 825, height: 1125, cards: 5, layout: 'layout.yml' do
         'white'
       end
     end
-    rect range: trade_players, x: 16.blocks, y: (20 - i*2).blocks, height: 2.blocks, width: 2.blocks, fill_color: fill_colors
+    rect range: trade_players, x: 16.5.blocks, y: (20 - i*2.5).blocks, height: 2.5.blocks, width: 2.5.blocks, fill_color: fill_colors
   end
 
   svg file: 'icons/money.svg', layout: 'icon', x: 3.blocks, y: 23.blocks 
-  png file: 'icons/eye_full.png', layout: 'icon', x: 8.5.blocks, y: 23.blocks
+  png file: 'icons/eye_full.png', layout: 'icon', x: 9.blocks, y: 23.blocks
   svg file: 'icons/trade.svg', layout: 'icon', x: 15.blocks, y: 23.blocks
   save_pdf file: 'players.pdf', prefix: 'players_'
   # save_png prefix: 'players_'
@@ -100,19 +100,19 @@ Squib::Deck.new width: 825, height: 1125, cards: 41, layout: 'layout.yml' do
       png range: card_number,
           file: "icons/cubes/#{color}.png",
           layout: 'cube',
-          x: 8.blocks + 4.blocks * index,
-          y: 4.blocks
+          x: 8.5.blocks + 4.blocks * index,
+          y: 3.blocks
       text range: card_number,
            str: number,
-           x: 9.blocks  + 4.blocks * index,
-           y: 4.5.blocks 
+           x: 9.5.blocks  + 4.blocks * index,
+           y: 3.5.blocks 
     end
   end
 
   first_divider_range = costs.map.with_index {|c, i| i if c.size > 1 }.compact
   second_divider_range = costs.map.with_index {|c, i| i if c.size > 2 }.compact
-  line range: first_divider_range, x1: 11.25.blocks, y1: 6.5.blocks, x2: 11.75.blocks, y2: 4.5.blocks, stroke_width: 10
-  line range: second_divider_range, x1: 15.25.blocks, y1: 6.5.blocks, x2: 15.75.blocks, y2: 4.5.blocks, stroke_width: 10
+  line range: first_divider_range, x1: 11.75.blocks, y1: 5.5.blocks, x2: 12.25.blocks, y2: 3.5.blocks, stroke_width: 10
+  line range: second_divider_range, x1: 15.75.blocks, y1: 5.5.blocks, x2: 16.25.blocks, y2: 3.5.blocks, stroke_width: 10
 
   # rect layout: 'title'
   text str: data["Name"], layout: 'title'
@@ -134,8 +134,8 @@ Squib::Deck.new width: 825, height: 1125, cards: 41, layout: 'layout.yml' do
       png range: collection, file: "icons/cubes/X.png", layout: 'cube', x: 15.blocks, y: 24.blocks
       text range: collection, str: 3, layout: 'cube_cost', x: 15.blocks, y: 24.5.blocks
     when 'Double_Resource'
-      png range: collection, file: data['Color'].map {|colors| "icons/cubes/#{colors.split('').first}_full.png" if colors.to_s.size == 2}, layout: 'cube', x: 7.blocks, y: 20.blocks
-      png range: collection, file: data['Color'].map {|colors| "icons/cubes/#{colors.split('').last}_full.png" if colors.to_s.size == 2}, layout: 'cube', x: 11.blocks, y: 20.blocks
+      png range: collection, file: data['Color'].map {|colors| "icons/cubes/#{colors.split('').first}_full.png" if colors.to_s.size == 2}, layout: 'cube', x: 7.5.blocks, y: 20.blocks
+      png range: collection, file: data['Color'].map {|colors| "icons/cubes/#{colors.split('').last}_full.png" if colors.to_s.size == 2}, layout: 'cube', x: 11.5.blocks, y: 20.blocks
       rect range: collection, layout: 'ally_alt'
       text range: collection, str: 'Trash from hand:', layout: 'ally_alt_text'
       svg range: collection, file: 'icons/shield.svg', layout: 'ally_alt_shield'
@@ -183,32 +183,31 @@ Squib::Deck.new width: 825, height: 1125, cards: 60, layout: 'layout.yml' do
   png file: data["Veto_Color"].map {|c| "icons/cubes/#{c}.png"}, x: 15.blocks, y: 3.5.blocks, width: 3.blocks, height: 3.blocks
   text str: data["Veto_Cost"], layout: 'cube_cost', x: 15.blocks, y: 4.blocks
 
-  # rect layout: 'title'
-  text str: data["Name"], layout: 'title'
+  # text str: data["Name"], layout: 'title'
 
-  rect layout: 'art', height: 5.blocks
-  text str: 'Art', layout: 'art_text'
+  # rect layout: 'art', height: 5.blocks
+  # text str: 'Art', layout: 'art_text'
 
-  png file: data['Color_1'].map {|c| "icons/cubes/#{c}.png"}, layout: 'cube', x: 3.blocks, y: 17.blocks
-  text str: data['Cost_1'], layout: 'cube_cost', x: 3.blocks, y: 17.5.blocks
+  png file: data['Color_1'].map {|c| "icons/cubes/#{c}.png"}, layout: 'cube', x: 3.blocks, y: 11.blocks
+  text str: data['Cost_1'], layout: 'cube_cost', x: 3.blocks, y: 11.5.blocks
+  svg file: 'icons/shield.svg', layout: 'shield', y: 11.blocks
+  text str: data['Reward_1'], layout: 'shield_text', y: 11.5.blocks
+  line x1: 7.blocks, x2: 14.blocks, y1: 12.5.blocks, y2: 12.5.blocks, stroke_width: 10
+  triangle x1: 13.5.blocks, y1: 12.blocks, x2: 13.5.blocks, y2: 13.blocks, x3: 14.5.blocks, y3: 12.5.blocks, fill_color: 'black'
+
+  png file: data['Color_2'].map {|c| "icons/cubes/#{c}.png"}, layout: 'cube', x: 3.blocks, y: 17.blocks
+  text str: data['Cost_2'], layout: 'cube_cost', x: 3.blocks, y: 17.5.blocks
   svg file: 'icons/shield.svg', layout: 'shield', y: 17.blocks
-  text str: data['Reward_1'], layout: 'shield_text', y: 17.5.blocks
+  text str: data['Reward_2'], layout: 'shield_text', y: 17.5.blocks
   line x1: 7.blocks, x2: 14.blocks, y1: 18.5.blocks, y2: 18.5.blocks, stroke_width: 10
   triangle x1: 13.5.blocks, y1: 18.blocks, x2: 13.5.blocks, y2: 19.blocks, x3: 14.5.blocks, y3: 18.5.blocks, fill_color: 'black'
 
-  png file: data['Color_2'].map {|c| "icons/cubes/#{c}.png"}, layout: 'cube', x: 3.blocks, y: 21.blocks
-  text str: data['Cost_2'], layout: 'cube_cost', x: 3.blocks, y: 21.5.blocks
-  svg file: 'icons/shield.svg', layout: 'shield', y: 21.blocks
-  text str: data['Reward_2'], layout: 'shield_text', y: 21.5.blocks
-  line x1: 7.blocks, x2: 14.blocks, y1: 22.5.blocks, y2: 22.5.blocks, stroke_width: 10
-  triangle x1: 13.5.blocks, y1: 22.blocks, x2: 13.5.blocks, y2: 23.blocks, x3: 14.5.blocks, y3: 22.5.blocks, fill_color: 'black'
-
-  png file: data['Color_3'].map {|c| "icons/cubes/#{c}.png"}, layout: 'cube', x: 3.blocks, y: 25.blocks
-  text str: data['Cost_3'], layout: 'cube_cost', x: 3.blocks, y: 25.5.blocks
-  svg file: 'icons/shield.svg', layout: 'shield', y: 25.blocks
-  text str: data['Reward_3'], layout: 'shield_text', y: 25.5.blocks
-  line x1: 7.blocks, x2: 14.blocks, y1: 26.5.blocks, y2: 26.5.blocks, stroke_width: 10
-  triangle x1: 13.5.blocks, y1: 26.blocks, x2: 13.5.blocks, y2: 27.blocks, x3: 14.5.blocks, y3: 26.5.blocks, fill_color: 'black'
+  png file: data['Color_3'].map {|c| "icons/cubes/#{c}.png"}, layout: 'cube', x: 3.blocks, y: 23.blocks
+  text str: data['Cost_3'], layout: 'cube_cost', x: 3.blocks, y: 23.5.blocks
+  svg file: 'icons/shield.svg', layout: 'shield', y: 23.blocks
+  text str: data['Reward_3'], layout: 'shield_text', y: 23.5.blocks
+  line x1: 7.blocks, x2: 14.blocks, y1: 24.5.blocks, y2: 24.5.blocks, stroke_width: 10
+  triangle x1: 13.5.blocks, y1: 24.blocks, x2: 13.5.blocks, y2: 25.blocks, x3: 14.5.blocks, y3: 24.5.blocks, fill_color: 'black'
 
   # save_png prefix: 'bill_'
   save_pdf file: 'bills.pdf', prefix: 'bills_'
@@ -228,26 +227,26 @@ Squib::Deck.new width: 825, height: 1125, cards: 66, layout: 'layout.yml' do
       png range: card_number,
           file: "icons/cubes/#{color}.png",
           layout: 'cube',
-          x: 8.blocks + 4.blocks * index,
-          y: 4.blocks
+          x: 8.5.blocks + 4.blocks * index,
+          y: 3.blocks
       text range: card_number,
            str: number,
-           x: 9.blocks  + 4.blocks * index,
-           y: 4.5.blocks 
+           x: 9.5.blocks  + 4.blocks * index,
+           y: 3.5.blocks 
     end
   end
 
   first_divider_range = costs.map.with_index {|c, i| i if c.size > 1 }.compact
   second_divider_range = costs.map.with_index {|c, i| i if c.size > 2 }.compact
-  line range: first_divider_range, x1: 11.25.blocks, y1: 6.5.blocks, x2: 11.75.blocks, y2: 4.5.blocks, stroke_width: 10
-  line range: second_divider_range, x1: 15.25.blocks, y1: 6.5.blocks, x2: 15.75.blocks, y2: 4.5.blocks, stroke_width: 10
+  line range: first_divider_range, x1: 11.75.blocks, y1: 5.5.blocks, x2: 12.25.blocks, y2: 3.5.blocks, stroke_width: 10
+  line range: second_divider_range, x1: 15.75.blocks, y1: 5.5.blocks, x2: 16.25.blocks, y2: 3.5.blocks, stroke_width: 10
 
-  text str: data["Name"], layout: 'title'
+  # text str: data["Name"], layout: 'title'
 
-  rect layout: 'art', height: 5.blocks
-  text str: 'Art', layout: 'art_text'
+  # rect layout: 'art', height: 5.blocks
+  # text str: 'Art', layout: 'art_text'
 
-  text str: data['Text'], layout: 'title', y: 17.blocks
+  text str: data['Text'], layout: 'title', y: 10.blocks
 
   types = {}; data['Type'].each_with_index{ |t, i| (types[t] ||= []) << i}
   plus_sign_range = data['Votes_Sign'].each_with_index.map {|v,i| i if v == "+"}.compact
@@ -255,41 +254,41 @@ Squib::Deck.new width: 825, height: 1125, cards: 66, layout: 'layout.yml' do
   types.each do |type, collection|
     case type
     when 'Votes'
-      png range: collection, file: "icons/scroll.png", layout: 'icon', x: 5.blocks, y: 18.5.blocks
-      line range: collection, x1: 10.blocks, y1: 20.5.blocks, x2: 12.blocks, y2: 20.5.blocks, stroke_width: 10
-      line range: collection & plus_sign_range, x1: 11.blocks, y1: 19.5.blocks, x2: 11.blocks, y2: 21.5.blocks, stroke_width: 10
-      png range: collection & plus_sign_range, file: data["Votes_Color"].map {|c| c ||= 'empty'; "icons/cubes/#{c}.png" }, layout: 'cube', x: 13.blocks, y: 19.blocks
-      png range: collection - plus_sign_range, file: data["Votes_Color"].map {|c| c ||= 'empty'; "icons/cubes/#{c}_full.png" }, layout: 'cube', x: 13.blocks, y: 19.blocks
-      text range: collection & plus_sign_range, str: data["Votes_Number"], layout: 'cube_cost', x: 13.blocks, y: 19.5.blocks
+      png range: collection, file: "icons/scroll.png", layout: 'icon', x: 5.blocks, y: 13.5.blocks
+      line range: collection, x1: 10.blocks, y1: 15.5.blocks, x2: 12.blocks, y2: 15.5.blocks, stroke_width: 10
+      line range: collection & plus_sign_range, x1: 11.blocks, y1: 14.5.blocks, x2: 11.blocks, y2: 16.5.blocks, stroke_width: 10
+      png range: collection & plus_sign_range, file: data["Votes_Color"].map {|c| c ||= 'empty'; "icons/cubes/#{c}.png" }, layout: 'cube', x: 13.blocks, y: 14.blocks
+      png range: collection - plus_sign_range, file: data["Votes_Color"].map {|c| c ||= 'empty'; "icons/cubes/#{c}_full.png" }, layout: 'cube', x: 13.blocks, y: 14.blocks
+      text range: collection & plus_sign_range, str: data["Votes_Number"], layout: 'cube_cost', x: 13.blocks, y: 14.5.blocks
     when 'Research'
-      svg range: collection, file: 'icons/eye.svg', layout: 'icon', x: 8.5.blocks, y: 18.5.blocks
+      svg range: collection, file: 'icons/eye.svg', layout: 'icon', x: 8.5.blocks, y: 14.5.blocks
     when 'Assassinate'
-      svg range: collection, file: 'icons/dagger.svg', layout: 'icon', x: 8.5.blocks, y: 18.5.blocks
+      svg range: collection, file: 'icons/dagger.svg', layout: 'icon', x: 8.5.blocks, y: 14.5.blocks
     when 'Attribute'
-      svg range: collection, file: data['Icon'].map {|i| i ||= 'empty'; "icons/#{i}.svg"}, layout: 'icon', x: 6.blocks, y: 18.blocks
-      line range: collection, x1: 11.5.blocks, y1: 20.5.blocks, x2: 13.5.blocks, y2: 20.5.blocks, stroke_width: 10
-      line range: collection & plus_sign_range, x1: 12.5.blocks, y1: 19.5.blocks, x2: 12.5.blocks, y2: 21.5.blocks, stroke_width: 10
-      text range: collection, str: "1", x: 13.5.blocks, y: 19.blocks, width: 3.blocks, height: 3.blocks, align: 'center', font_size: 24
+      svg range: collection, file: data['Icon'].map {|i| i ||= 'empty'; "icons/#{i}.svg"}, layout: 'icon', x: 6.blocks, y: 14.blocks
+      line range: collection, x1: 11.5.blocks, y1: 16.5.blocks, x2: 13.5.blocks, y2: 16.5.blocks, stroke_width: 10
+      line range: collection & plus_sign_range, x1: 12.5.blocks, y1: 15.5.blocks, x2: 12.5.blocks, y2: 17.5.blocks, stroke_width: 10
+      text range: collection, str: "1", x: 13.5.blocks, y: 15.blocks, width: 3.blocks, height: 3.blocks, align: 'center', font_size: 24
     when 'Double_Attribute'
-      svg range: collection, file: data['Icon'].map {|i| i ||= 'empty'; "icons/#{i}.svg"}, layout: 'icon', x: 6.blocks, y: 16.blocks
-      line range: collection, x1: 11.5.blocks, y1: 18.5.blocks, x2: 13.5.blocks, y2: 18.5.blocks, stroke_width: 10
-      line range: collection & plus_sign_range, x1: 12.5.blocks, y1: 17.5.blocks, x2: 12.5.blocks, y2: 19.5.blocks, stroke_width: 10
-      text range: collection, str: "1", x: 13.5.blocks, y: 17.blocks, width: 3.blocks, height: 3.blocks, align: 'center', font_size: 24
+      svg range: collection, file: data['Icon'].map {|i| i ||= 'empty'; "icons/#{i}.svg"}, layout: 'icon', x: 6.blocks, y: 10.blocks
+      line range: collection, x1: 11.5.blocks, y1: 12.5.blocks, x2: 13.5.blocks, y2: 12.5.blocks, stroke_width: 10
+      line range: collection & plus_sign_range, x1: 12.5.blocks, y1: 11.5.blocks, x2: 12.5.blocks, y2: 13.5.blocks, stroke_width: 10
+      text range: collection, str: "1", x: 13.5.blocks, y: 11.blocks, width: 3.blocks, height: 3.blocks, align: 'center', font_size: 24
 
       # second icons
-      svg range: collection, file: data['Icon_2'].map {|i| i ||= 'empty'; "icons/#{i}.svg"}, layout: 'icon', x: 6.blocks, y: 20.blocks
-      line range: collection, x1: 11.5.blocks, y1: 22.5.blocks, x2: 13.5.blocks, y2: 22.5.blocks, stroke_width: 10
-      line range: collection & plus_sign_range_2, x1: 12.5.blocks, y1: 21.5.blocks, x2: 12.5.blocks, y2: 23.5.blocks, stroke_width: 10
-      text range: collection, str: "1", x: 13.5.blocks, y: 21.blocks, width: 3.blocks, height: 3.blocks, align: 'center', font_size: 24
+      svg range: collection, file: data['Icon_2'].map {|i| i ||= 'empty'; "icons/#{i}.svg"}, layout: 'icon', x: 6.blocks, y: 18.blocks
+      line range: collection, x1: 11.5.blocks, y1: 20.5.blocks, x2: 13.5.blocks, y2: 20.5.blocks, stroke_width: 10
+      line range: collection & plus_sign_range_2, x1: 12.5.blocks, y1: 19.5.blocks, x2: 12.5.blocks, y2: 21.5.blocks, stroke_width: 10
+      text range: collection, str: "1", x: 13.5.blocks, y: 19.blocks, width: 3.blocks, height: 3.blocks, align: 'center', font_size: 24
     when 'Intrigue'
-      svg range: collection, file: 'icons/steal.svg', layout: 'icon', x: 6.blocks, y: 18.5.blocks
-      svg range: collection, file: 'icons/ally.svg', layout: 'icon', x: 13.blocks, y: 18.5.blocks
+      svg range: collection, file: 'icons/steal.svg', layout: 'icon', x: 6.blocks, y: 14.5.blocks
+      svg range: collection, file: 'icons/ally.svg', layout: 'icon', x: 13.blocks, y: 14.5.blocks
     when 'Votes_All'
-      png range: collection, file: "icons/scroll.png", layout: 'icon', x: 5.blocks, y: 18.5.blocks
-      line range: collection, x1: 10.blocks, y1: 20.5.blocks, x2: 12.blocks, y2: 20.5.blocks, stroke_width: 10
-      line range: collection, x1: 11.blocks, y1: 19.5.blocks, x2: 11.blocks, y2: 21.5.blocks, stroke_width: 10
-      png range: collection, file: 'icons/cubes/X.png', layout: 'cube', x: 13.blocks, y: 19.blocks
-      text range: collection, str: 3, layout: 'cube_cost', x: 13.blocks, y: 19.5.blocks
+      png range: collection, file: "icons/scroll.png", layout: 'icon', x: 5.blocks, y: 14.5.blocks
+      line range: collection, x1: 10.blocks, y1: 16.5.blocks, x2: 12.blocks, y2: 16.5.blocks, stroke_width: 10
+      line range: collection, x1: 11.blocks, y1: 15.5.blocks, x2: 11.blocks, y2: 17.5.blocks, stroke_width: 10
+      png range: collection, file: 'icons/cubes/X.png', layout: 'cube', x: 13.blocks, y: 15.blocks
+      text range: collection, str: 3, layout: 'cube_cost', x: 13.blocks, y: 15.5.blocks
     end
   end
 
