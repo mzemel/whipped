@@ -111,10 +111,7 @@ ally_alt_points:
 
 rider:
   x: 75
-  y: 900
   width: 675
-  height: 150
-  dash: 3 3
 
 rider_shield:
   x: 600

@@ -13,9 +13,15 @@ class Float
   end
 end
 
+def draw_grid!
+  30.times {|i| line x1: 0.blocks, x2: 22.blocks, y1: i.blocks, y2: i.blocks}
+  22.times {|i| line x1: i.blocks, x2: i.blocks, y1: 0.blocks, y2: 30.blocks}
+end
+
 COLORS = {
   'bill_background' => '#d5d1cc',
-  'bill_veto' => '#9d9a96'
+  'bill_veto' => '#9d9a96',
+  'event_background' => '#fffde4'
 }
 
 Squib::Deck.new width: 825, height: 1125, cards: 5, layout: 'layout.yml' do
@@ -214,6 +220,7 @@ Squib::Deck.new width: 825, height: 1125, cards: 60, layout: 'layout.yml' do
   line x1: 9.blocks, x2: 13.blocks, y1: 25.blocks, y2: 25.blocks, stroke_width: 10
   triangle x1: 12.5.blocks, y1: 24.5.blocks, x2: 12.5.blocks, y2: 25.5.blocks, x3: 13.5.blocks, y3: 25.blocks, fill_color: 'black'
 
+  draw_grid!
   save_png prefix: 'bill_'
   save_pdf file: 'bills.pdf', prefix: 'bills_'
 end
@@ -221,30 +228,29 @@ end
 # events
 Squib::Deck.new width: 825, height: 1125, cards: 66, layout: 'layout.yml' do
   rect layout: 'cut'
-  rect layout: 'bleed'
+  rect layout: 'bleed', fill_color: COLORS['event_background']
   data = xlsx file: 'data/events.xlsx', explode: 'Quantity'
 
-  png file: 'icons/event.png', layout: 'icon'
+  png file: 'icons/event_white.png', layout: 'icon'
   
   costs = data["Cost"].map {|str| str.split('').each_slice(2) }
   costs.each_with_index do |card_cost, card_number|
     card_cost.each_with_index do |(number, color), index|
       png range: card_number,
-          file: "icons/cubes/#{color}.png",
-          layout: 'cube',
-          x: 8.5.blocks + 4.blocks * index,
-          y: 3.blocks
+        file: "icons/cubes/#{color}.png",
+        layout: 'cube_large',
+        x: 8.75.blocks + 6.blocks * index,
+        y: 3.blocks
       text range: card_number,
-           str: number,
-           x: 9.5.blocks  + 4.blocks * index,
-           y: 3.5.blocks 
+        layout: 'cube_cost_large',
+         str: number,
+         x: 8.75.blocks  + 6.blocks * index,
+         y: 3.75.blocks 
     end
   end
 
   first_divider_range = costs.map.with_index {|c, i| i if c.size > 1 }.compact
-  second_divider_range = costs.map.with_index {|c, i| i if c.size > 2 }.compact
-  line range: first_divider_range, x1: 11.75.blocks, y1: 5.5.blocks, x2: 12.25.blocks, y2: 3.5.blocks, stroke_width: 10
-  line range: second_divider_range, x1: 15.75.blocks, y1: 5.5.blocks, x2: 16.25.blocks, y2: 3.5.blocks, stroke_width: 10
+  line range: first_divider_range, x1: 13.75.blocks, y1: 7.5.blocks, x2: 14.75.blocks, y2: 3.5.blocks, stroke_width: 10
 
   # text str: data["Name"], layout: 'title'
 
@@ -260,64 +266,67 @@ Squib::Deck.new width: 825, height: 1125, cards: 66, layout: 'layout.yml' do
     case type
     when 'Votes'
       png range: collection, file: "icons/scroll.png", layout: 'icon', x: 5.blocks, y: 13.5.blocks
-      line range: collection, x1: 10.blocks, y1: 15.5.blocks, x2: 12.blocks, y2: 15.5.blocks, stroke_width: 10
-      line range: collection & plus_sign_range, x1: 11.blocks, y1: 14.5.blocks, x2: 11.blocks, y2: 16.5.blocks, stroke_width: 10
-      png range: collection & plus_sign_range, file: data["Votes_Color"].map {|c| c ||= 'empty'; "icons/cubes/#{c}.png" }, layout: 'cube', x: 13.blocks, y: 14.blocks
-      png range: collection - plus_sign_range, file: data["Votes_Color"].map {|c| c ||= 'empty'; "icons/cubes/#{c}_full.png" }, layout: 'cube', x: 13.blocks, y: 14.blocks
-      text range: collection & plus_sign_range, str: data["Votes_Number"], layout: 'cube_cost', x: 13.blocks, y: 14.5.blocks
+      line range: collection, x1: 10.5.blocks, y1: 15.5.blocks, x2: 12.5.blocks, y2: 15.5.blocks, stroke_width: 10
+      line range: collection & plus_sign_range, x1: 11.5.blocks, y1: 14.5.blocks, x2: 11.5.blocks, y2: 16.5.blocks, stroke_width: 10
+      png range: collection & plus_sign_range, file: data["Votes_Color"].map {|c| c ||= 'empty'; "icons/cubes/#{c}.png" }, layout: 'cube_large', x: 13.blocks, y: 13.5.blocks
+      png range: collection - plus_sign_range, file: data["Votes_Color"].map {|c| c ||= 'empty'; "icons/cubes/#{c}_full.png" }, layout: 'cube_large', x: 13.blocks, y: 13.5.blocks
+      text range: collection & plus_sign_range, str: data["Votes_Number"], layout: 'cube_cost_large', x: 13.blocks, y: 14.25.blocks
     when 'Research'
-      svg range: collection, file: 'icons/eye.svg', layout: 'icon', x: 8.5.blocks, y: 14.5.blocks
+      svg range: collection, file: 'icons/eye.svg', layout: 'icon', x: 8.5.blocks, y: 13.5.blocks
     when 'Assassinate'
-      svg range: collection, file: 'icons/dagger.svg', layout: 'icon', x: 8.5.blocks, y: 14.5.blocks
+      svg range: collection, file: 'icons/dagger.svg', layout: 'icon', x: 8.5.blocks, y: 13.5.blocks
     when 'Attribute'
       svg range: collection, file: data['Icon'].map {|i| i ||= 'empty'; "icons/#{i}.svg"}, layout: 'icon', x: 6.blocks, y: 14.blocks
-      line range: collection, x1: 11.5.blocks, y1: 16.5.blocks, x2: 13.5.blocks, y2: 16.5.blocks, stroke_width: 10
-      line range: collection & plus_sign_range, x1: 12.5.blocks, y1: 15.5.blocks, x2: 12.5.blocks, y2: 17.5.blocks, stroke_width: 10
-      text range: collection, str: "1", x: 13.5.blocks, y: 15.blocks, width: 3.blocks, height: 3.blocks, align: 'center', font_size: 24
+      line range: collection, x1: 12.blocks, y1: 16.5.blocks, x2: 14.blocks, y2: 16.5.blocks, stroke_width: 10
+      line range: collection & plus_sign_range, x1: 13.blocks, y1: 15.5.blocks, x2: 13.blocks, y2: 17.5.blocks, stroke_width: 10
+      text range: collection, str: "1", x: 14.blocks, y: 15.blocks, width: 3.blocks, height: 3.blocks, align: 'center', font_size: 24
     when 'Double_Attribute'
       svg range: collection, file: data['Icon'].map {|i| i ||= 'empty'; "icons/#{i}.svg"}, layout: 'icon', x: 6.blocks, y: 10.blocks
-      line range: collection, x1: 11.5.blocks, y1: 12.5.blocks, x2: 13.5.blocks, y2: 12.5.blocks, stroke_width: 10
-      line range: collection & plus_sign_range, x1: 12.5.blocks, y1: 11.5.blocks, x2: 12.5.blocks, y2: 13.5.blocks, stroke_width: 10
-      text range: collection, str: "1", x: 13.5.blocks, y: 11.blocks, width: 3.blocks, height: 3.blocks, align: 'center', font_size: 24
+      line range: collection, x1: 12.blocks, y1: 12.5.blocks, x2: 14.blocks, y2: 12.5.blocks, stroke_width: 10
+      line range: collection & plus_sign_range, x1: 13.blocks, y1: 11.5.blocks, x2: 13.blocks, y2: 13.5.blocks, stroke_width: 10
+      text range: collection, str: "1", x: 14.blocks, y: 11.blocks, width: 3.blocks, height: 3.blocks, align: 'center', font_size: 24
 
       # second icons
-      svg range: collection, file: data['Icon_2'].map {|i| i ||= 'empty'; "icons/#{i}.svg"}, layout: 'icon', x: 6.blocks, y: 18.blocks
-      line range: collection, x1: 11.5.blocks, y1: 20.5.blocks, x2: 13.5.blocks, y2: 20.5.blocks, stroke_width: 10
-      line range: collection & plus_sign_range_2, x1: 12.5.blocks, y1: 19.5.blocks, x2: 12.5.blocks, y2: 21.5.blocks, stroke_width: 10
-      text range: collection, str: "1", x: 13.5.blocks, y: 19.blocks, width: 3.blocks, height: 3.blocks, align: 'center', font_size: 24
+      svg range: collection, file: data['Icon_2'].map {|i| i ||= 'empty'; "icons/#{i}.svg"}, layout: 'icon', x: 6.blocks, y: 16.blocks
+      line range: collection, x1: 12.blocks, y1: 18.5.blocks, x2: 14.blocks, y2: 18.5.blocks, stroke_width: 10
+      line range: collection & plus_sign_range_2, x1: 13.blocks, y1: 17.5.blocks, x2: 13.blocks, y2: 19.5.blocks, stroke_width: 10
+      text range: collection, str: "1", x: 14.blocks, y: 17.blocks, width: 3.blocks, height: 3.blocks, align: 'center', font_size: 24
     when 'Intrigue'
-      svg range: collection, file: 'icons/steal.svg', layout: 'icon', x: 6.blocks, y: 14.5.blocks
-      svg range: collection, file: 'icons/ally.svg', layout: 'icon', x: 13.blocks, y: 14.5.blocks
+      svg range: collection, file: 'icons/steal.svg', layout: 'icon', x: 4.5.blocks, y: 13.5.blocks
+      svg range: collection, file: 'icons/ally.svg', layout: 'icon', x: 11.5.blocks, y: 13.5.blocks
     when 'Votes_All'
-      png range: collection, file: "icons/scroll.png", layout: 'icon', x: 5.blocks, y: 14.5.blocks
-      line range: collection, x1: 10.blocks, y1: 16.5.blocks, x2: 12.blocks, y2: 16.5.blocks, stroke_width: 10
-      line range: collection, x1: 11.blocks, y1: 15.5.blocks, x2: 11.blocks, y2: 17.5.blocks, stroke_width: 10
-      png range: collection, file: 'icons/cubes/X.png', layout: 'cube', x: 13.blocks, y: 15.blocks
-      text range: collection, str: 3, layout: 'cube_cost', x: 13.blocks, y: 15.5.blocks
+      png range: collection, file: "icons/scroll.png", layout: 'icon', x: 5.blocks, y: 13.5.blocks
+      line range: collection, x1: 10.5.blocks, y1: 15.5.blocks, x2: 12.5.blocks, y2: 15.5.blocks, stroke_width: 10
+      line range: collection, x1: 11.5.blocks, y1: 14.5.blocks, x2: 11.5.blocks, y2: 16.5.blocks, stroke_width: 10
+      png range: collection, file: 'icons/cubes/X.png', layout: 'cube_large', x: 13.blocks, y: 13.5.blocks
+      text range: collection, str: 3, layout: 'cube_cost_large', x: 13.blocks, y: 14.25.blocks
     end
   end
 
   reward_riders = data['Rider_Reward'].map.with_index {|r, i| i if r}.compact
 
   # Reward riders
-  rect layout: 'rider'
-  png range: reward_riders, file: data["Rider_Color"].map { |c| "icons/cubes/#{c}.png" }, layout: 'cube', x: 3.blocks, y: 24.5.blocks
-  text range: reward_riders, str: data["Rider_Cost"], layout: 'cube', x: 4.blocks, y: 25.blocks
-  svg range: reward_riders, file: 'icons/shield.svg', layout: 'rider_shield'
-  text str: data["Rider_Reward"], layout: 'rider_points'
-  line range: reward_riders, x1: 7.blocks, x2: 15.blocks, y1: 26.blocks, y2: 26.blocks, stroke_width: 10
-  triangle range: reward_riders, x1: 14.5.blocks, y1: 25.5.blocks, x2: 14.5.blocks, y2: 26.5.blocks, x3: 15.5.blocks, y3: 26.blocks, fill_color: 'black'
+  rect layout: 'rider', y: 21.75.blocks, fill_color: COLORS['bill_background'], height: 6.25.blocks
+  png range: reward_riders, file: data["Rider_Color"].map { |c| "icons/cubes/#{c}.png" }, layout: 'cube_large', x: 3.blocks, y: 22.5.blocks
+  text range: reward_riders, str: data["Rider_Cost"], layout: 'cube_cost_large', x: 3.blocks, y: 23.25.blocks
+  png range: reward_riders, file: 'icons/shield.png', layout: 'shield_large', x: 14.blocks, y: 22.5.blocks
+  text str: data["Rider_Reward"], layout: 'shield_text_large', x: 14.blocks, y: 23.25.blocks
+  line range: reward_riders, x1: 9.blocks, x2: 13.blocks, y1: 25.blocks, y2: 25.blocks, stroke_width: 10
+  triangle range: reward_riders, x1: 12.5.blocks, y1: 24.5.blocks, x2: 12.5.blocks, y2: 25.5.blocks, x3: 13.5.blocks, y3: 25.blocks, fill_color: 'black'
 
   # Veto riders
   veto_riders = data['Rider_Reward'].map.with_index {|r, i| i if !r}.compact
-  line range: veto_riders, x1: 10.blocks, y1: 25.blocks, x2: 12.blocks, y2: 27.blocks, stroke_width: 10, stroke_color: '#ff0000'
-  line range: veto_riders, x1: 10.blocks, y1: 27.blocks, x2: 12.blocks, y2: 25.blocks, stroke_width: 10, stroke_color: '#ff0000'
-  circle range: veto_riders, x: 13.blocks, y: 25.5.blocks, radius: 6, fill_color: 'black'
-  circle range: veto_riders, x: 13.blocks, y: 26.5.blocks, radius: 6, fill_color: 'black'
-  png range: veto_riders, file: data["Rider_Color"].map { |c| c ||= 'empty'; "icons/cubes/#{c}.png" }, layout: 'cube', x: 15.blocks, y: 24.5.blocks
-  text range: veto_riders, str: data["Rider_Cost"], layout: 'cube_cost', x: 15.blocks, y: 25.blocks
+  rect layout: 'rider', range: veto_riders, y: 21.75.blocks, fill_color: COLORS['bill_veto'], height: 6.25.blocks
+  line range: veto_riders, x1: 10.25.blocks, y1: 24.blocks, x2: 12.25.blocks, y2: 26.blocks, stroke_width: 10, stroke_color: 'black'
+  line range: veto_riders, x1: 10.25.blocks, y1: 26.blocks, x2: 12.25.blocks, y2: 24.blocks, stroke_width: 10, stroke_color: 'black'
+  circle range: veto_riders, x: 13.25.blocks, y: 24.5.blocks, radius: 6, fill_color: 'black'
+  circle range: veto_riders, x: 13.25.blocks, y: 25.5.blocks, radius: 6, fill_color: 'black'
+  png range: veto_riders, file: data["Rider_Color"].map { |c| c ||= 'empty'; "icons/cubes/#{c}.png" }, layout: 'cube_large', x: 14.blocks, y: 22.25.blocks
+  text range: veto_riders, str: data["Rider_Cost"], layout: 'cube_cost_large', x: 14.blocks, y: 23.blocks
+
+  draw_grid!
 
 
   save_pdf file: 'events.pdf', prefix: 'events_'
-  # save_png prefix: 'event_'
+  save_png prefix: 'event_'
 end
