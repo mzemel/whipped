@@ -28,6 +28,13 @@ icon:
   width: 206.25
   height: 206.25
 
+icon_small:
+  extends: bleed
+  x: += 28.125
+  y: += 28.125
+  width: 187.5
+  height: 187.5
+
 cube:
   width: 112.5
   height: 112.5
@@ -104,12 +111,12 @@ ally_alt_text:
 ally_alt_shield:
   x: 571.875
   y: 918.75
-  width: 75
-  height: 75
+  width: 112.5
+  height: 112.5
 
 ally_alt_points:
   extends: ally_alt_shield
-  x: += 18.75
+  x: += 28.125
   y: += 9.375
 
 rider:
