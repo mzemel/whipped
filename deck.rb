@@ -13,6 +13,11 @@ class Float
   end
 end
 
+COLORS = {
+  'bill_background' => '#d5d1cc',
+  'bill_veto' => '#9d9a96'
+}
+
 Squib::Deck.new width: 825, height: 1125, cards: 5, layout: 'layout.yml' do
   rect layout: 'cut'
   rect layout: 'bleed'
@@ -171,45 +176,45 @@ end
 
 Squib::Deck.new width: 825, height: 1125, cards: 60, layout: 'layout.yml' do
   rect layout: 'cut'
-  rect layout: 'bleed'
+  rect layout: 'bleed', fill_color: '#d5d1cc'
   data = xlsx file: 'data/bills.xlsx', explode: 'Quantity'
 
-  png file: 'icons/scroll.png', layout: 'icon'
-  rect x: 9.blocks, y: 3.blocks, width: 10.blocks, height: 4.blocks, dash: '3 3'
-  line x1: 10.blocks, y1: 4.blocks, x2: 12.blocks, y2: 6.blocks, stroke_width: 10, stroke_color: '#ff0000'
-  line x1: 10.blocks, y1: 6.blocks, x2: 12.blocks, y2: 4.blocks, stroke_width: 10, stroke_color: '#ff0000'
-  circle x: 13.blocks, y: 4.5.blocks, radius: 6, fill_color: 'black'
-  circle x: 13.blocks, y: 5.5.blocks, radius: 6, fill_color: 'black'
-  png file: data["Veto_Color"].map {|c| "icons/cubes/#{c}.png"}, x: 15.blocks, y: 3.5.blocks, width: 3.blocks, height: 3.blocks
-  text str: data["Veto_Cost"], layout: 'cube_cost', x: 15.blocks, y: 4.blocks
+  png file: 'icons/scroll_white.png', layout: 'icon'
+  rect x: 9.25.blocks, y: 2.blocks, width: 10.75.blocks, height: 6.25.blocks, stroke_width: 0, fill_color: COLORS['bill_veto']
+  line x1: 10.25.blocks, y1: 4.25.blocks, x2: 12.25.blocks, y2: 6.25.blocks, stroke_width: 10, stroke_color: 'black'
+  line x1: 10.25.blocks, y1: 6.25.blocks, x2: 12.25.blocks, y2: 4.25.blocks, stroke_width: 10, stroke_color: 'black'
+  circle x: 13.25.blocks, y: 4.75.blocks, radius: 6, fill_color: 'black'
+  circle x: 13.25.blocks, y: 5.75.blocks, radius: 6, fill_color: 'black'
+  png file: data["Veto_Color"].map {|c| "icons/cubes/#{c}.png"}, layout: 'cube_large', x: 14.blocks, y: 2.75.blocks
+  text str: data["Veto_Cost"], layout: 'cube_cost_large', x: 14.blocks, y: 3.5.blocks
 
   # text str: data["Name"], layout: 'title'
 
   # rect layout: 'art', height: 5.blocks
   # text str: 'Art', layout: 'art_text'
 
-  png file: data['Color_1'].map {|c| "icons/cubes/#{c}.png"}, layout: 'cube', x: 3.blocks, y: 11.blocks
-  text str: data['Cost_1'], layout: 'cube_cost', x: 3.blocks, y: 11.5.blocks
-  svg file: 'icons/shield.svg', layout: 'shield', y: 11.blocks
-  text str: data['Reward_1'], layout: 'shield_text', y: 11.5.blocks
-  line x1: 7.blocks, x2: 14.blocks, y1: 12.5.blocks, y2: 12.5.blocks, stroke_width: 10
-  triangle x1: 13.5.blocks, y1: 12.blocks, x2: 13.5.blocks, y2: 13.blocks, x3: 14.5.blocks, y3: 12.5.blocks, fill_color: 'black'
+  png file: data['Color_1'].map {|c| "icons/cubes/#{c}.png"}, layout: 'cube_large', x: 3.blocks, y: 9.5.blocks
+  text str: data['Cost_1'], layout: 'cube_cost_large', x: 3.blocks, y: 10.25.blocks
+  png file: 'icons/shield.png', layout: 'shield_large', x: 14.blocks, y: 9.5.blocks
+  text str: data['Reward_1'], layout: 'shield_text_large', x: 14.blocks, y: 10.5.blocks
+  line x1: 9.blocks, x2: 13.blocks, y1: 12.blocks, y2: 12.blocks, stroke_width: 10
+  triangle x1: 12.5.blocks, y1: 11.5.blocks, x2: 12.5.blocks, y2: 12.5.blocks, x3: 13.5.blocks, y3: 12.blocks, fill_color: 'black'
 
-  png file: data['Color_2'].map {|c| "icons/cubes/#{c}.png"}, layout: 'cube', x: 3.blocks, y: 17.blocks
-  text str: data['Cost_2'], layout: 'cube_cost', x: 3.blocks, y: 17.5.blocks
-  svg file: 'icons/shield.svg', layout: 'shield', y: 17.blocks
-  text str: data['Reward_2'], layout: 'shield_text', y: 17.5.blocks
-  line x1: 7.blocks, x2: 14.blocks, y1: 18.5.blocks, y2: 18.5.blocks, stroke_width: 10
-  triangle x1: 13.5.blocks, y1: 18.blocks, x2: 13.5.blocks, y2: 19.blocks, x3: 14.5.blocks, y3: 18.5.blocks, fill_color: 'black'
+  png file: data['Color_2'].map {|c| "icons/cubes/#{c}.png"}, layout: 'cube_large', x: 3.blocks, y: 16.blocks
+  text str: data['Cost_2'], layout: 'cube_cost_large', x: 3.blocks, y: 16.75.blocks
+  png file: 'icons/shield.png', layout: 'shield_large', x: 14.blocks, y: 16.blocks
+  text str: data['Reward_2'], layout: 'shield_text_large', x: 14.blocks, y: 17.blocks
+  line x1: 9.blocks, x2: 13.blocks, y1: 18.5.blocks, y2: 18.5.blocks, stroke_width: 10
+  triangle x1: 12.5.blocks, y1: 18.blocks, x2: 12.5.blocks, y2: 19.blocks, x3: 13.5.blocks, y3: 18.5.blocks, fill_color: 'black'
 
-  png file: data['Color_3'].map {|c| "icons/cubes/#{c}.png"}, layout: 'cube', x: 3.blocks, y: 23.blocks
-  text str: data['Cost_3'], layout: 'cube_cost', x: 3.blocks, y: 23.5.blocks
-  svg file: 'icons/shield.svg', layout: 'shield', y: 23.blocks
-  text str: data['Reward_3'], layout: 'shield_text', y: 23.5.blocks
-  line x1: 7.blocks, x2: 14.blocks, y1: 24.5.blocks, y2: 24.5.blocks, stroke_width: 10
-  triangle x1: 13.5.blocks, y1: 24.blocks, x2: 13.5.blocks, y2: 25.blocks, x3: 14.5.blocks, y3: 24.5.blocks, fill_color: 'black'
+  png file: data['Color_3'].map {|c| "icons/cubes/#{c}.png"}, layout: 'cube_large', x: 3.blocks, y: 22.5.blocks
+  text str: data['Cost_3'], layout: 'cube_cost_large', x: 3.blocks, y: 23.25.blocks
+  png file: 'icons/shield.png', layout: 'shield_large', x: 14.blocks, y: 22.5.blocks
+  text str: data['Reward_3'], layout: 'shield_text_large', x: 14.blocks, y: 23.5.blocks
+  line x1: 9.blocks, x2: 13.blocks, y1: 25.blocks, y2: 25.blocks, stroke_width: 10
+  triangle x1: 12.5.blocks, y1: 24.5.blocks, x2: 12.5.blocks, y2: 25.5.blocks, x3: 13.5.blocks, y3: 25.blocks, fill_color: 'black'
 
-  # save_png prefix: 'bill_'
+  save_png prefix: 'bill_'
   save_pdf file: 'bills.pdf', prefix: 'bills_'
 end
 
