@@ -272,8 +272,6 @@ Squib::Deck.new width: 825, height: 1125, cards: 70, layout: 'layout.yml' do
       png range: collection & plus_sign_range, file: data["Votes_Color"].map {|c| c ||= 'empty'; "icons/cubes/#{c}.png" }, layout: 'cube_large', x: 13.blocks, y: 13.5.blocks
       png range: collection - plus_sign_range, file: data["Votes_Color"].map {|c| c ||= 'empty'; "icons/cubes/#{c}_full.png" }, layout: 'cube_large', x: 13.blocks, y: 13.5.blocks
       text range: collection & plus_sign_range, str: data["Votes_Number"], layout: 'cube_cost_large', x: 13.blocks, y: 14.25.blocks
-    when 'Research'
-      png range: collection, file: 'icons/ally_number.png', layout: 'icon', x: 8.5.blocks, y: 13.5.blocks
     when 'Assassinate'
       png range: collection, file: 'icons/dagger.png', layout: 'icon', x: 8.5.blocks, y: 13.5.blocks
     when 'Attribute'
@@ -293,8 +291,8 @@ Squib::Deck.new width: 825, height: 1125, cards: 70, layout: 'layout.yml' do
       line range: collection & plus_sign_range_2, x1: 17.75.blocks, y1: 13.blocks, x2: 17.75.blocks, y2: 14.blocks, stroke_width: 6
       text range: collection, str: "1", x: 17.25.blocks, y: 12.5.blocks, width: 3.blocks, height: 3.blocks, align: 'center', font_size: 16
     when 'Intrigue'
-      png range: collection, file: 'icons/steal.png', layout: 'icon', x: 4.5.blocks, y: 13.5.blocks
-      png range: collection, file: 'icons/ally.png', layout: 'icon', x: 11.5.blocks, y: 13.5.blocks
+      png range: collection, file: 'icons/ally.png', layout: 'icon', x: 4.5.blocks, y: 13.5.blocks
+      png range: collection, file: 'icons/steal.png', layout: 'icon', x: 11.5.blocks, y: 13.5.blocks
     when 'Votes_All'
       png range: collection, file: "icons/scroll_white.png", layout: 'icon', x: 5.blocks, y: 13.5.blocks
       line range: collection, x1: 10.5.blocks, y1: 15.5.blocks, x2: 12.5.blocks, y2: 15.5.blocks, stroke_width: 10
