@@ -91,7 +91,7 @@ Squib::Deck.new width: 825, height: 1125, cards: 5, layout: 'layout.yml' do
   end
 
   png file: 'icons/money.png', layout: 'icon_small', x: 3.blocks, y: 22.75.blocks
-  png file: 'icons/eye_white.png', layout: 'icon_small', x: 8.75.blocks, y: 22.75.blocks
+  png file: 'icons/ally_number.png', layout: 'icon_small', x: 8.75.blocks, y: 22.75.blocks
   png file: 'icons/trade.png', layout: 'icon_small', x: 14.75.blocks, y: 22.75.blocks
 
   save_pdf file: 'players.pdf', prefix: 'players_'
@@ -274,7 +274,7 @@ Squib::Deck.new width: 825, height: 1125, cards: 66, layout: 'layout.yml' do
       png range: collection - plus_sign_range, file: data["Votes_Color"].map {|c| c ||= 'empty'; "icons/cubes/#{c}_full.png" }, layout: 'cube_large', x: 13.blocks, y: 13.5.blocks
       text range: collection & plus_sign_range, str: data["Votes_Number"], layout: 'cube_cost_large', x: 13.blocks, y: 14.25.blocks
     when 'Research'
-      png range: collection, file: 'icons/eye_white.png', layout: 'icon', x: 8.5.blocks, y: 13.5.blocks
+      png range: collection, file: 'icons/ally_number.png', layout: 'icon', x: 8.5.blocks, y: 13.5.blocks
     when 'Assassinate'
       png range: collection, file: 'icons/dagger.png', layout: 'icon', x: 8.5.blocks, y: 13.5.blocks
     when 'Attribute'
