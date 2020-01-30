@@ -94,6 +94,7 @@ Squib::Deck.new width: 825, height: 1125, cards: 5, layout: 'layout.yml' do
   png file: 'icons/trade.png', layout: 'icon_small', x: 14.75.blocks, y: 22.75.blocks
 
   save_pdf file: 'players.pdf', prefix: 'players_'
+  # save_sheet sprue: 'a4_usa_card.yml', prefix: 'players_sheet_'
   save_png prefix: 'players_'
 end
 
@@ -178,7 +179,7 @@ Squib::Deck.new width: 825, height: 1125, cards: 38, layout: 'layout.yml' do
   # draw_grid!
 
   save_png prefix: 'allies_'
-  # save_sheet sprue: 'a4_usa_card.yml', prefix: 'allies_resource_'
+  # save_sheet sprue: 'a4_usa_card.yml', prefix: 'allies_sheet_'
   save_pdf file: 'allies.pdf', prefix: 'allies_'
 end
 
@@ -223,6 +224,7 @@ Squib::Deck.new width: 825, height: 1125, cards: 60, layout: 'layout.yml' do
   triangle x1: 12.5.blocks, y1: 24.5.blocks, x2: 12.5.blocks, y2: 25.5.blocks, x3: 13.5.blocks, y3: 25.blocks, fill_color: 'black'
 
   save_png prefix: 'bill_'
+  # save_sheet sprue: 'a4_usa_card.yml', prefix: 'bills_sheet_'
   save_pdf file: 'bills.pdf', prefix: 'bills_'
 end
 
@@ -324,5 +326,6 @@ Squib::Deck.new width: 825, height: 1125, cards: 70, layout: 'layout.yml' do
   text range: veto_riders, str: data["Rider_Cost"], layout: 'cube_cost_large', x: 14.blocks, y: 23.blocks
 
   save_pdf file: 'events.pdf', prefix: 'events_'
+  # save_sheet sprue: 'a4_usa_card.yml', prefix: 'events_sheet_'
   save_png prefix: 'event_'
 end
