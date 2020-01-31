@@ -19,19 +19,19 @@ def draw_grid!
 end
 
 COLORS = {
-  'bill_border' => '#5c5a5b',
+  'bill_border' => 'black',
   'bill_background' => '#e1e1e1',
   'bill_veto' => '#9d9a96',
-  'event_border' => '#69a0b5',
-  'event_background' => '#cfdce2',
-  'ally_border' => '#764c24',
-  'ally_background' => '#fee6ce'
+  'event_border' => 'black',
+  'event_background' => '#e3eff5',
+  'ally_border' => 'black',
+  'ally_background' => '#f0dfb4'
 }
 
 Squib::Deck.new width: 825, height: 1125, cards: 5, layout: 'layout.yml' do
   data = xlsx file: 'data/players.xlsx', explode: 'Quantity'
   rect layout: 'cut'
-  rect layout: 'bleed', fill_color: data['Background_Color'].map {|c| "##{c}"}
+  rect layout: 'bleed', fill_color: data['Hex'].map {|c| "##{c}"}
 
   rect layout: 'art', y: 3.blocks, stroke_width: 0
 
@@ -41,12 +41,13 @@ Squib::Deck.new width: 825, height: 1125, cards: 5, layout: 'layout.yml' do
       if min_money.to_i < i + 1 && money.to_i >= i + 1
         'gray'
       elsif min_money.to_i >= i + 1
-        "##{color}"
+        'black'
       else
         'white'
       end
     end
-    rect x: 3.blocks, y: (19.5 - i*2.5).blocks, height: 2.5.blocks, width: 2.5.blocks, fill_color: fill_colors
+    stroke_colors = fill_colors.map { |c| c == 'black' ? 'white' : 'black' }
+    rect x: 3.blocks, y: (19.5 - i*2.5).blocks, height: 2.5.blocks, width: 2.5.blocks, fill_color: fill_colors, stroke_color: stroke_colors
   end
 
   #  second income column
@@ -55,12 +56,13 @@ Squib::Deck.new width: 825, height: 1125, cards: 5, layout: 'layout.yml' do
       if min_money.to_i < i + 6 && money.to_i >= i + 6
         'gray'
       elsif min_money.to_i >= i + 6
-        "##{color}"
+        'black'
       else
         'white'
       end
     end
-    rect x: 5.5.blocks, y: (19.5 - i*2.5).blocks, height: 2.5.blocks, width: 2.5.blocks, fill_color: fill_colors
+    stroke_colors = fill_colors.map { |c| c == 'black' ? 'white' : 'black' }
+    rect x: 5.5.blocks, y: (19.5 - i*2.5).blocks, height: 2.5.blocks, width: 2.5.blocks, fill_color: fill_colors, stroke_color: stroke_colors
   end
   
   #peek
@@ -69,12 +71,13 @@ Squib::Deck.new width: 825, height: 1125, cards: 5, layout: 'layout.yml' do
       if min_peek.to_i < i + 1 && peek.to_i >= i + 1
         'gray'
       elsif min_peek.to_i >= i + 1
-        "##{color}"
+        'black'
       else
         'white'
       end
     end
-    rect x: 11.blocks, y: (19.5 - i*2.5).blocks, height: 2.5.blocks, width: 2.5.blocks, fill_color: fill_colors
+    stroke_colors = fill_colors.map { |c| c == 'black' ? 'white' : 'black' }
+    rect x: 11.blocks, y: (19.5 - i*2.5).blocks, height: 2.5.blocks, width: 2.5.blocks, fill_color: fill_colors, stroke_color: stroke_colors
   end
 
   #trade
@@ -84,12 +87,13 @@ Squib::Deck.new width: 825, height: 1125, cards: 5, layout: 'layout.yml' do
       if min_trade.to_i < i + 1 && trade.to_i >= i + 1
         'gray'
       elsif min_trade.to_i >= i + 1
-        "##{color}"
+        'black'
       else
         'white'
       end
     end
-    rect range: trade_players, x: 16.5.blocks, y: (19.5 - i*2.5).blocks, height: 2.5.blocks, width: 2.5.blocks, fill_color: fill_colors
+    stroke_colors = fill_colors.map { |c| c == 'black' ? 'white' : 'black' }
+    rect range: trade_players, x: 16.5.blocks, y: (19.5 - i*2.5).blocks, height: 2.5.blocks, width: 2.5.blocks, fill_color: fill_colors, stroke_color: stroke_colors
   end
 
   png file: 'icons/money.png', layout: 'icon_small', x: 3.blocks, y: 22.75.blocks
@@ -130,12 +134,12 @@ Squib::Deck.new width: 825, height: 1125, cards: 38, layout: 'layout.yml' do
   line range: first_divider_range, x1: 13.75.blocks, y1: 7.5.blocks, x2: 14.75.blocks, y2: 3.5.blocks, stroke_width: 10
 
   # rect layout: 'title'
-  text str: data["Name"], layout: 'title', y: 9.5.blocks
+  text str: data["Name"], layout: 'title', y: 9.5.blocks, font: 'Raleway Bold'
 
   rect layout: 'art'
   # text str: 'Art', layout: 'art', y: 13.blocks
 
-  text str: data['Text'], layout: 'title', y: 17.5.blocks
+  text str: data['Text'], layout: 'title', y: 17.5.blocks, font: 'Raleway'
 
   types = {}; data['Type'].each_with_index{ |t, i| (types[t] ||= []) << i}
   plus_sign_range = data['Sign'].each_with_index.map {|v,i| i if v == "+"}.compact
@@ -145,14 +149,14 @@ Squib::Deck.new width: 825, height: 1125, cards: 38, layout: 'layout.yml' do
     when 'Single_Resource'
       png range: collection, file: data["Color"].map {|c| c = 'empty' if c.to_s.size != 1; "icons/cubes/#{c}_full.png"}, layout: 'cube_large', x: 8.75.blocks, y: 18.blocks
       rect range: collection, layout: 'ally_alt'
-      text range: collection, str: 'Trash from hand:', layout: 'ally_alt_text'
+      text range: collection, str: 'Trash from hand:', layout: 'ally_alt_text', font: 'Raleway'
       png range: collection, file: "icons/cubes/X.png", layout: 'cube', x: 15.blocks, y: 24.blocks
       text range: collection, str: 3, layout: 'cube_cost', x: 15.blocks, y: 24.5.blocks
     when 'Double_Resource'
       png range: collection, file: data['Color'].map {|colors| "icons/cubes/#{colors.split('').first}_full.png" if colors.to_s.size == 2}, layout: 'cube_large', x: 5.5.blocks, y: 18.blocks
       png range: collection, file: data['Color'].map {|colors| "icons/cubes/#{colors.split('').last}_full.png" if colors.to_s.size == 2}, layout: 'cube_large', x: 11.5.blocks, y: 18.blocks
       rect range: collection, layout: 'ally_alt'
-      text range: collection, str: 'Trash from hand:', layout: 'ally_alt_text'
+      text range: collection, str: 'Trash from hand:', layout: 'ally_alt_text', font: 'Raleway'
       png range: collection, file: 'icons/shield.png', layout: 'ally_alt_shield', x: 15.blocks, y: 24.blocks 
       text range: collection, str: 1, layout: 'ally_alt_points'
     when 'Bodyguard'
@@ -175,7 +179,7 @@ Squib::Deck.new width: 825, height: 1125, cards: 38, layout: 'layout.yml' do
       png range: collection, file: data['Icon_2'].map {|i| i ||= 'empty'; "icons/#{i}.png"}, layout: 'icon', x: 12.blocks, y: 19.5.blocks
       line range: collection, x1: 17.25.blocks, y1: 20.5.blocks, x2: 18.25.blocks, y2: 20.5.blocks, stroke_width: 6
       line range: collection & plus_sign_range_2, x1: 17.75.blocks, y1: 20.blocks, x2: 17.75.blocks, y2: 21.blocks, stroke_width: 6
-      text range: collection, str: data['Number_2'], x: 17.25.blocks, y: 19.5.blocks, width: 3.blocks, height: 3.blocks, align: 'center', font_size: 16
+      text range: collection, str: data['Number_2'], x: 17.25.blocks, y: 19.5.blocks, width: 3.blocks, height: 3.blocks, align: 'center', font_size: 18
     end
   end
   
@@ -263,7 +267,7 @@ Squib::Deck.new width: 825, height: 1125, cards: 70, layout: 'layout.yml' do
   # rect layout: 'art', height: 5.blocks
   # text str: 'Art', layout: 'art_text'
 
-  text str: data['Text'], layout: 'title', y: 10.blocks
+  text str: data['Text'], layout: 'title', y: 10.blocks, font: 'Raleway'
 
   types = {}; data['Type'].each_with_index{ |t, i| (types[t] ||= []) << i}
   plus_sign_range = data['Votes_Sign'].each_with_index.map {|v,i| i if v == "+"}.compact
@@ -272,8 +276,8 @@ Squib::Deck.new width: 825, height: 1125, cards: 70, layout: 'layout.yml' do
     case type
     when 'Votes'
       png range: collection, file: "icons/scroll_white.png", layout: 'icon', x: 5.blocks, y: 13.5.blocks
-      line range: collection, x1: 10.5.blocks, y1: 15.5.blocks, x2: 12.5.blocks, y2: 15.5.blocks, stroke_width: 10
-      line range: collection & plus_sign_range, x1: 11.5.blocks, y1: 14.5.blocks, x2: 11.5.blocks, y2: 16.5.blocks, stroke_width: 10
+      line range: collection, x1: 10.5.blocks, y1: 16.blocks, x2: 12.5.blocks, y2: 16.blocks, stroke_width: 10
+      line range: collection & plus_sign_range, x1: 11.5.blocks, y1: 15.blocks, x2: 11.5.blocks, y2: 17.blocks, stroke_width: 10
       png range: collection & plus_sign_range, file: data["Votes_Color"].map {|c| c ||= 'empty'; "icons/cubes/#{c}.png" }, layout: 'cube_large', x: 13.blocks, y: 13.5.blocks
       png range: collection - plus_sign_range, file: data["Votes_Color"].map {|c| c ||= 'empty'; "icons/cubes/#{c}_full.png" }, layout: 'cube_large', x: 13.blocks, y: 13.5.blocks
       text range: collection & plus_sign_range, str: data["Votes_Number"], layout: 'cube_cost_large', x: 13.blocks, y: 14.25.blocks
@@ -300,8 +304,8 @@ Squib::Deck.new width: 825, height: 1125, cards: 70, layout: 'layout.yml' do
       png range: collection, file: 'icons/steal.png', layout: 'icon', x: 11.5.blocks, y: 13.5.blocks
     when 'Votes_All'
       png range: collection, file: "icons/scroll_white.png", layout: 'icon', x: 5.blocks, y: 13.5.blocks
-      line range: collection, x1: 10.5.blocks, y1: 15.5.blocks, x2: 12.5.blocks, y2: 15.5.blocks, stroke_width: 10
-      line range: collection, x1: 11.5.blocks, y1: 14.5.blocks, x2: 11.5.blocks, y2: 16.5.blocks, stroke_width: 10
+      line range: collection, x1: 10.5.blocks, y1: 16.blocks, x2: 12.5.blocks, y2: 16.blocks, stroke_width: 10
+      line range: collection, x1: 11.5.blocks, y1: 15.blocks, x2: 11.5.blocks, y2: 17.blocks, stroke_width: 10
       png range: collection, file: 'icons/cubes/X.png', layout: 'cube_large', x: 13.blocks, y: 13.5.blocks
       text range: collection, str: 3, layout: 'cube_cost_large', x: 13.blocks, y: 14.25.blocks
     end
