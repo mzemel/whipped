@@ -19,10 +19,13 @@ def draw_grid!
 end
 
 COLORS = {
-  'bill_background' => '#d5d1cc',
+  'bill_border' => '#5c5a5b',
+  'bill_background' => '#e1e1e1',
   'bill_veto' => '#9d9a96',
-  'event_background' => '#fffde4',
-  'ally_background' => '#fee6ce',
+  'event_border' => '#69a0b5',
+  'event_background' => '#cfdce2',
+  'ally_border' => '#764c24',
+  'ally_background' => '#fee6ce'
 }
 
 Squib::Deck.new width: 825, height: 1125, cards: 5, layout: 'layout.yml' do
@@ -101,7 +104,7 @@ end
 
 # allies
 Squib::Deck.new width: 825, height: 1125, cards: 38, layout: 'layout.yml' do
-  rect layout: 'cut'
+  rect layout: 'cut', fill_color: COLORS['ally_border']
   rect layout: 'bleed', fill_color: COLORS['ally_background']
   data = xlsx file: 'data/allies.xlsx', explode: 'Quantity'
 
@@ -184,8 +187,8 @@ Squib::Deck.new width: 825, height: 1125, cards: 38, layout: 'layout.yml' do
 end
 
 Squib::Deck.new width: 825, height: 1125, cards: 60, layout: 'layout.yml' do
-  rect layout: 'cut'
-  rect layout: 'bleed', fill_color: '#d5d1cc'
+  rect layout: 'cut', fill_color: COLORS['bill_border']
+  rect layout: 'bleed', fill_color: COLORS['bill_background']
   data = xlsx file: 'data/bills.xlsx', explode: 'Quantity'
 
   png file: 'icons/scroll_white.png', layout: 'icon'
@@ -230,7 +233,7 @@ end
 
 # events
 Squib::Deck.new width: 825, height: 1125, cards: 70, layout: 'layout.yml' do
-  rect layout: 'cut'
+  rect layout: 'cut', fill_color: COLORS['event_border']
   rect layout: 'bleed', fill_color: COLORS['event_background']
   data = xlsx file: 'data/events.xlsx', explode: 'Quantity'
 
