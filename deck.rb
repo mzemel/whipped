@@ -23,7 +23,7 @@ COLORS = {
   'bill_background' => '#e1e1e1',
   'bill_veto' => '#9d9a96',
   'event_border' => 'black',
-  'event_background' => '#e3eff5',
+  'event_background' => '#fcd9d9',
   'ally_border' => 'black',
   'ally_background' => '#f0dfb4'
 }
