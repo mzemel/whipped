@@ -28,9 +28,8 @@ COLORS = {
   'ally_background' => '#f0dfb4'
 }
 
-Squib::Deck.new width: 825, height: 1125, cards: 5, layout: 'layout.yml' do
-  data = xlsx file: 'data/players.xlsx', explode: 'Quantity'
-  rect layout: 'cut'
+Squib::Deck.new width: 825, height: 1125, cards: 5, cell_size: 37.5, layout: 'layout.yml' do
+  rect layout: 'cut', y: cells(2)
   rect layout: 'bleed', fill_color: data['Hex'].map {|c| "##{c}"}
 
   rect layout: 'art', y: 3.blocks, stroke_width: 0
